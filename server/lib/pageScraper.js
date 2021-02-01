@@ -1,3 +1,5 @@
+const {db} = require('../fileManager');
+
 const scraperObject = {
     async scraper(browser, category, urls, em) {
         let currentPageData = {};
@@ -25,7 +27,6 @@ const scraperObject = {
                 });
 
                 if (result.status() === 200) {
-                    console.info('newPage url', newPage.url());
                     if (newPage.url().includes('//zen.yandex.')) {
 
                         dataObj['title'] = await newPage.$eval('h1', title => {
@@ -112,24 +113,42 @@ const scraperObject = {
             console.log('scraped :', urls);
         } else {
             for (let i = 0; i < urls.length; i++) {
+
                 let url = urls[i];
-                currentPageData = await pagePromise(url);
 
-                if (currentPageData && currentPageData.body) {
+                let duplicate = db.find({url: url}, function (err, docs) {
+                    // If no document is found, docs is equal to []
+                    if (docs) {
+                        console.info(__filename,'url duplicate found', i, url, '....aborting');
+                    } else{
+                        console.info(__filename, 'no duplicate found', i, url);
+                    }
+                    return docs;
+                });
 
-                    currentPageData.url = baseUrl(url);
-                    currentPageData.category = category;
-                    em.emit('scraped', currentPageData);
+                if (!duplicate) {
 
-                    console.info('scraped :', i + 1, 'of ', urls.length, url);
+                    console.info(__filename,'scraping', i, url);
 
-                } else {
-                    currentPageData.url = baseUrl(url);
-                    currentPageData.category = category;
-                    em.emit('scraped missing', currentPageData);
+                    currentPageData = await pagePromise(url);
 
-                    console.info('scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
+                    if (currentPageData && currentPageData.body) {
+                        currentPageData.url = baseUrl(url);
+                        currentPageData.category = category;
+                        em.emit('scraped', currentPageData);
+
+                        console.info(__filename,'scraped :', i + 1, 'of ', urls.length, url);
+
+                    } else {
+                        currentPageData.url = baseUrl(url);
+                        currentPageData.category = category;
+                        em.emit('scraped missing', currentPageData);
+
+                        console.info(__filename,'scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
+                    }
+
                 }
+
 
             }
         }

@@ -8,7 +8,7 @@ const Datastore = require('nedb');
 console.time('db loaded');
 console.time('dbMissing loaded');
 
-FILE_DB = path.join(__dirname,'./db/data.db');
+FILE_DB = path.join(__dirname, './db/data.db');
 FILE_DB_ERR = path.join(__dirname, './db/data_err.db');
 
 
@@ -34,64 +34,6 @@ function readUrlFileAsync(folderName) {
     return readdir(folderName);
 }
 
-function removeDuplicateLine(newCode) {
-    // newCode = newCode.trim();
-    let match = /\r\n/.test(newCode);
-    let theSep;
-    if (match == -1) {
-        //windows line breaks
-        theSep = "\r\n";
-        newCode = newCode.replace(/\r\n+/g, "\r\n");
-    } else {
-        //unix line breaks
-        theSep = "\n";
-        newCode = newCode.replace(/\r/g, "\n");
-        newCode = newCode.replace(/\n+/g, "\n");
-
-    }
-
-    //Create array
-    let newCodeArray = newCode.split(theSep);
-    for (let i = 0; i < newCodeArray.length; i++) {
-        newCodeArray[i] = newCodeArray[i].trim();
-    }
-
-    //Remove duplicates
-    let i = newCodeArray.length - 1;
-    while (i > -1) {
-        let ii = newCodeArray.length - 1;
-        while (ii > -1) {
-            if (i != ii) {
-                if (newCodeArray[i] === newCodeArray[ii]) {
-                    newCodeArray.splice(ii, 1);
-                }
-            }
-            ii--;
-        }
-        i--;
-    }
-
-    // if(document.getElementById("sortNone").checked === false){
-    //     //Do some sorting
-    //     //Using the default sort helps with grouping capitals first - Ban, ban, Can, can, etc.
-    //     newCodeArray.sort();
-    //
-    //     //Natural sorting
-    //     if(document.getElementById("sortAlpha").checked === true){
-    //         naturalSort.insensitive = true;
-    //         newCodeArray.sort(naturalSort);
-    //     }
-    //
-    //     if(document.querySelector('#reverseSort:checked')){
-    //         newCodeArray.reverse();
-    //     }
-    //
-    // }
-
-    //Assemble the lines back together
-    newCode = newCodeArray.join(theSep);
-    return newCode;
-}
 
 function readUrlFile(folderName, cb) {
     let data;
@@ -106,34 +48,36 @@ function readUrlFile(folderName, cb) {
 
 function addMissingDataToDB(data) {
 
-     let scrapedMissingData = {
-            'url': data.url,
-            'category': data.category,
-            'title': data.title,
-            'date_added': Date.now(),
+    let scrapedMissingData = {
+        'url': data.url,
+        'category': data.category,
+        'title': data.title,
+        'date_added': Date.now(),
+    }
+
+    let missingFound = dbMissing.find({url: scrapedMissingData.url}, function (err, docs) {
+        // If no document is found, docs is equal to []
+        if (err) console.log(err);
+        if (docs) {
+            console.info(__filename, 'missing_db duplicate found', docs.url);
+            db.em.emit('missing_db', docs);
         }
+        return docs;
+    });
 
-        let missingFound = dbMissing.find({ url: scrapedMissingData.url }, function (err, docs) {
-            // If no document is found, docs is equal to []
-            console.info('duplicate found', docs.url);
-            db.em.emit('db_found', docs);
+    if (!missingFound) {
 
-            return docs;
+        dbMissing.insert(scrapedMissingData, function (err, newDoc) {
+            if (err) {
+                return console.error(err);
+
+            }
         });
+    }
 
-        if (!missingFound) {
-
-            dbMissing.insert(scrapedMissingData, function (err, newDoc) {
-                if (err) {
-                    return console.error(err);
-
-                }
-            });
-        }
-    
 }
-async function saveArticle(data, missing) {
 
+async function saveArticle(data, missing) {
     console.time('starting to write');
 
     if (missing) {
@@ -152,7 +96,7 @@ async function saveArticle(data, missing) {
 
     const dir = scrapedData.category;
     const DIRNAME = path.join(__dirname, '../data', dir);
-    const fileName = path.join(__dirname, '../data', dir, 'data.txt');
+    // const fileName = path.join(__dirname, '../data', dir, 'data.txt');
 
     if (!doneExistsSync) {
         doneExistsSync = true;
@@ -166,33 +110,21 @@ async function saveArticle(data, missing) {
         }
     }
 
-    let docs = db.find({url: scrapedData.url}, function (err, docs) {
-        // If no document is found, docs is equal to []
-        console.info('duplicate found', docs.url);
-        db.em.emit('db_found', docs);
-        return docs;
+    db.insert(scrapedData, function (err, newDoc) {
+        if (err) {
+            return console.error(err);
+        }
+        db.em.emit('db_added', newDoc.title);
     });
 
-    if (!docs) {
+    // fs.appendFile(fileName, JSON.stringify(scrapedData) + ',/r/n', 'utf8', err => {
+    //     if (err) {
+    //         return console.error(err);
+    //     }
+    //     console.log("The data has been scraped and saved successfully! View it at './data.txt'");
+    // });
 
-        db.insert(scrapedData, function (err, newDoc) {
-            if (err) {
-                return console.error(err);
-
-            }
-            db.em.emit('db_added', newDoc.title);
-        });
-
-        fs.appendFile(fileName, JSON.stringify(scrapedData) + ',/r/n', 'utf8', err => {
-            if (err) {
-                return console.error(err);
-            }
-            console.log("The data has been scraped and saved successfully! View it at './data.txt'");
-        });
-
-        console.timeEnd('starting to write');
-
-    }
+    console.timeEnd('starting to write');
 
 }
 
@@ -227,5 +159,6 @@ module.exports = {
     readUrlFile,
     saveArticle,
     saveCategoryUrls,
-    db_em: db.em
+    db_em: db.em,
+    db: db
 };

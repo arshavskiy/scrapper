@@ -125,9 +125,11 @@ db_em.addListener('db_added', function (data) {
     console.debug(__filename, data);
 });
 db_em.addListener('db_found', function (data) {
-    console.debug('db_found :', data.url);
+    // console.debug('db_found :', data.url);
 });
-
+db_em.addListener('missing_db', function (data) {
+    // console.debug('missing_db :', data.url);
+});
 // Pass the browser instance to the scraper controller
 // process.exit(0);
 

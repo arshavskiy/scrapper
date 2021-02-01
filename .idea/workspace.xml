@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="">
+    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="fix bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/dbManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/dbManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/lib/browser.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/browser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/lib/fileManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/lib/linksScaper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/linksScaper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/fileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/fileManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/helpers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/lib/pageScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/pageScraper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/readUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/readUrls.js" afterDir="false" />
     </list>
@@ -29,6 +28,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -45,12 +45,62 @@
       <option name="presentableId" value="Default" />
       <updated>1612158822159</updated>
       <workItem from="1612158823476" duration="31000" />
-      <workItem from="1612166099410" duration="2505000" />
+      <workItem from="1612166099410" duration="4146000" />
+      <workItem from="1612188194185" duration="2555000" />
+      <workItem from="1612192088988" duration="1921000" />
     </task>
+    <task id="LOCAL-00001" summary="db added">
+      <created>1612174236739</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612174236739</updated>
+    </task>
+    <task id="LOCAL-00002" summary="bug fix">
+      <created>1612190003261</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1612190003261</updated>
+    </task>
+    <task id="LOCAL-00003" summary="file moved">
+      <created>1612190028825</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1612190028825</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix bug">
+      <created>1612191712909</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1612191712909</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="db added" />
+    <MESSAGE value="bug fix" />
+    <MESSAGE value="file moved" />
+    <MESSAGE value="fix bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -58,20 +108,23 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/server/lib/linksScaper.js</url>
           <line>49</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/server/lib/linksScaper.js</url>
           <line>37</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/fileManager.js</url>
-          <line>182</line>
+          <url>file://$PROJECT_DIR$/server/lib/pageScraper.js</url>
+          <line>105</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/lib/pageScraper.js</url>
+          <line>125</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -26,7 +26,7 @@ dbManager.init = () => {
     // db.loadDatabase(function (err) {
 
         let docs = db.find({ url: 'https://zen.yandex.ru/media/lampexpert/evrosoiuz-pohoronit-beskorpusnuiu-mikroshemukapelku-6007d34728c8a925485b7e7b' }, function (err, docs) {
-            console.info('found', docs);
+            console.info(__filename,'found', docs);
             return docs;
         });
 }
