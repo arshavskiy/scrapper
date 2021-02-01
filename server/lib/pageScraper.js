@@ -97,6 +97,13 @@ const scraperObject = {
             console.error(e);
         });
 
+        const baseUrl = (url) => {
+            let temp = url;
+            if (url.includes('?')) {
+                temp = url.split('?')[0];
+            }
+            return temp
+        }
 
         if (typeof urls === "string") {
             currentPageData = await pagePromise(urls);
@@ -105,24 +112,25 @@ const scraperObject = {
             console.log('scraped :', urls);
         } else {
             for (let i = 0; i < urls.length; i++) {
-                const url = urls[i];
+                let url = urls[i];
                 currentPageData = await pagePromise(url);
 
                 if (currentPageData && currentPageData.body) {
-                    currentPageData.url = url ? (url.includes('?') ? url.split['?'].pop() : url) : 'no url?';
+
+                    currentPageData.url = baseUrl(url);
                     currentPageData.category = category;
                     em.emit('scraped', currentPageData);
 
                     console.info('scraped :', i + 1, 'of ', urls.length, url);
 
                 } else {
-                    currentPageData.url = url ? (url.includes('?') ? url.split['?'].pop() : url) : 'no url?';
+                    currentPageData.url = baseUrl(url);
                     currentPageData.category = category;
                     em.emit('scraped missing', currentPageData);
 
                     console.info('scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
                 }
-               
+
             }
         }
 

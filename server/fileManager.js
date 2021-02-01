@@ -6,7 +6,7 @@ const emitter = require('events').EventEmitter;
 const Datastore = require('nedb');
 
 console.time('db loaded');
-console.time('FILE_DB_ERR loaded');
+console.time('dbMissing loaded');
 
 FILE_DB = path.join(__dirname,'./db/data.db');
 FILE_DB_ERR = path.join(__dirname, './db/data_err.db');
@@ -21,7 +21,7 @@ db.loadDatabase(function (err) {
 });
 dbMissing.loadDatabase(function (err) {
     if (err) console.log('FILE_DB_ERR', err);
-    console.timeEnd('FILE_DB_ERR loaded');
+    console.timeEnd('dbMissing loaded');
 });
 
 db.em = new emitter();
