@@ -7,7 +7,7 @@ const scraperObject = {
             if (url.includes('?')) {
                 temp = url.split('?')[0];
             }
-            return temp
+            return temp;
         }
 
         const pagePromise = (link) => new Promise(async (resolve, reject) => {
@@ -28,7 +28,7 @@ const scraperObject = {
                 const result = await newPage.goto(link, {
                     waitUntil: "load",
                 }).catch(err => {
-                    return console.error(err);
+                    return console.log(err);
                 });
 
                 if (result.status() === 200) {
@@ -105,7 +105,7 @@ const scraperObject = {
 
         if (typeof urls === "string") {
             currentPageData = await pagePromise(urls);
-            currentPageData.url = urls;
+            currentPageData.url = baseUrl(urls);
             console.info('scraped :', urls);
 
         } else {
@@ -115,7 +115,9 @@ const scraperObject = {
                     let url = urls[i];
                     console.info('scraping', i + 1, baseUrl(url));
 
-                    currentPageData = await pagePromise(url);
+                    currentPageData = await pagePromise(url).catch(err => {
+                        console.log(err);
+                    });
                     currentPageData.url = baseUrl(url);
                     currentPageData.category = category;
 
@@ -126,6 +128,7 @@ const scraperObject = {
                         em.emit('scraped missing', currentPageData);
                         console.info('scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
                     }
+                    continue;
                 }
             } catch (e) {
                 console.log(e);
