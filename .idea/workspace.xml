@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="promises added and some filter">
+    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="small">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/fileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/fileManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/getUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/getUrls.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/lib/pageScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/pageScraper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/readUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/readUrls.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +46,7 @@
       <workItem from="1612166099410" duration="4146000" />
       <workItem from="1612188194185" duration="2555000" />
       <workItem from="1612192088988" duration="3137000" />
-      <workItem from="1612202653752" duration="7526000" />
+      <workItem from="1612202653752" duration="8148000" />
     </task>
     <task id="LOCAL-00001" summary="db added">
       <created>1612174236739</created>
@@ -89,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612211071755</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="small">
+      <created>1612212105334</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1612212105334</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,7 +122,8 @@
     <MESSAGE value="fix bug" />
     <MESSAGE value="refactor" />
     <MESSAGE value="promises added and some filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="promises added and some filter" />
+    <MESSAGE value="small" />
+    <option name="LAST_COMMIT_MESSAGE" value="small" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

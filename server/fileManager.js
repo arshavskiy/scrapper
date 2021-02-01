@@ -143,7 +143,7 @@ async function saveCategoryUrls(category, urls) {
         }
     }
 
-    const fileName = path.join(__dirname, '../../data', category, category + '.urls');
+    const fileName = path.join(__dirname, '../data', category, category + '.urls');
 
     fs.appendFile(fileName, urls.join('\r\n'), 'utf8', err => {
         if (err) {

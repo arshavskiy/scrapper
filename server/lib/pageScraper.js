@@ -106,35 +106,32 @@ const scraperObject = {
         if (typeof urls === "string") {
             currentPageData = await pagePromise(urls);
             currentPageData.url = urls;
-            console.info( 'scraped :', urls);
+            console.info('scraped :', urls);
 
         } else {
 
-            for (let i = 0; i < urls.length; i++) {
-                let url = urls[i];
+            try {
+                for (let i = 0; i < urls.length; i++) {
+                    let url = urls[i];
+                    console.info('scraping', i + 1, baseUrl(url));
 
-                currentPageData = await pagePromise(url);
-                console.info( 'scraping', i + 1, baseUrl(url));
-
-                if (currentPageData && currentPageData.body) {
+                    currentPageData = await pagePromise(url);
                     currentPageData.url = baseUrl(url);
                     currentPageData.category = category;
-                    em.emit('scraped', currentPageData);
 
-                    console.info( 'scraped :', i + 1, 'of ', urls.length, currentPageData.title);
-
-                } else {
-                    currentPageData.url = baseUrl(url);
-                    currentPageData.category = category;
-                    em.emit('scraped missing', currentPageData);
-
-                    console.info( 'scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
+                    if (currentPageData && currentPageData.body) {
+                        em.emit('scraped', currentPageData);
+                        console.info('scraped :', i + 1, 'of ', urls.length, currentPageData.title);
+                    } else {
+                        em.emit('scraped missing', currentPageData);
+                        console.info('scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
+                    }
                 }
-
+            } catch (e) {
+                console.log(e);
             }
+
         }
-
-
     }
 }
 
