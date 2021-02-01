@@ -1,0 +1,22 @@
+{
+  "name": "scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/getUrls.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/getUrls.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "do": "^0.6.1",
+    "nedb": "^1.8.0",
+    "puppeteer": "^5.5.0",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3"
+  }
+}
