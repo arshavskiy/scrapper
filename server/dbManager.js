@@ -1,15 +1,15 @@
 // const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const {readUrlFile} = require('fileManager');
+// const {readUrlFile} = require('fileManager');
 
-const DATA_FOLDER = path.join(__dirname, '..', 'data');
-let finalFilesToScan = {};
+// const DATA_FOLDER = path.join(__dirname, '..', 'data');
+// let finalFilesToScan = {};
 
 
 const Datastore = require('nedb');
 // const db = new Datastore({filename: '../db/data.db'});
-const db = new Datastore({filename: '../db/data.db', autoload:true});
+const db = new Datastore({filename: './db/data.db', autoload:true});
 
 // db.loadDatabase(err=>{
 //     console.error('db',err);

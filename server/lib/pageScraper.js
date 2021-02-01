@@ -1,25 +1,30 @@
-const {db} = require('../fileManager');
-
 const scraperObject = {
     async scraper(browser, category, urls, em) {
         let currentPageData = {};
 
-        const pagePromise = (link) => new Promise(async (resolve, reject) => {
+        const baseUrl = (url) => {
+            let temp = url;
+            if (url.includes('?')) {
+                temp = url.split('?')[0];
+            }
+            return temp
+        }
 
+        const pagePromise = (link) => new Promise(async (resolve, reject) => {
+            let dataObj = {};
             console.time('scraped');
 
-            let dataObj = {};
-            const newPage = await browser.newPage();
-            await newPage.setDefaultNavigationTimeout(0);
-            await newPage.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
-
-            await newPage.setViewport({
-                width: 1920,
-                height: 1440,
-                deviceScaleFactor: 1,
-            });
-
             try {
+                const newPage = await browser.newPage();
+                await newPage.setDefaultNavigationTimeout(0);
+                await newPage.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+
+                await newPage.setViewport({
+                    width: 1920,
+                    height: 1440,
+                    deviceScaleFactor: 1,
+                });
+
                 const result = await newPage.goto(link, {
                     waitUntil: "load",
                 }).catch(err => {
@@ -27,6 +32,7 @@ const scraperObject = {
                 });
 
                 if (result.status() === 200) {
+
                     if (newPage.url().includes('//zen.yandex.')) {
 
                         dataObj['title'] = await newPage.$eval('h1', title => {
@@ -85,70 +91,45 @@ const scraperObject = {
                 } else {
                     reject('500');
                 }
-
+                await newPage.close();
+                console.timeEnd('scraped');
+                resolve(dataObj);
             } catch (e) {
                 console.error(e);
                 // reject(e);
             }
-            await newPage.close();
-            console.timeEnd('scraped');
-            resolve(dataObj);
 
         }).catch(e => {
             console.error(e);
         });
 
-        const baseUrl = (url) => {
-            let temp = url;
-            if (url.includes('?')) {
-                temp = url.split('?')[0];
-            }
-            return temp
-        }
-
         if (typeof urls === "string") {
             currentPageData = await pagePromise(urls);
             currentPageData.url = urls;
+            console.info(__filename, 'scraped :', urls);
 
-            console.log('scraped :', urls);
         } else {
-            for (let i = 0; i < urls.length; i++) {
 
+            for (let i = 0; i < urls.length; i++) {
                 let url = urls[i];
 
-                let duplicate = db.find({url: url}, function (err, docs) {
-                    // If no document is found, docs is equal to []
-                    if (docs) {
-                        console.info(__filename,'url duplicate found', i, url, '....aborting');
-                    } else{
-                        console.info(__filename, 'no duplicate found', i, url);
-                    }
-                    return docs;
-                });
+                currentPageData = await pagePromise(url);
+                console.info(__filename, 'scraping', i + 1, url);
 
-                if (!duplicate) {
+                if (currentPageData && currentPageData.body) {
+                    currentPageData.url = baseUrl(url);
+                    currentPageData.category = category;
+                    em.emit('scraped', currentPageData);
 
-                    console.info(__filename,'scraping', i, url);
+                    console.info(__filename, 'scraped :', i + 1, 'of ', urls.length, url);
 
-                    currentPageData = await pagePromise(url);
+                } else {
+                    currentPageData.url = baseUrl(url);
+                    currentPageData.category = category;
+                    em.emit('scraped missing', currentPageData);
 
-                    if (currentPageData && currentPageData.body) {
-                        currentPageData.url = baseUrl(url);
-                        currentPageData.category = category;
-                        em.emit('scraped', currentPageData);
-
-                        console.info(__filename,'scraped :', i + 1, 'of ', urls.length, url);
-
-                    } else {
-                        currentPageData.url = baseUrl(url);
-                        currentPageData.category = category;
-                        em.emit('scraped missing', currentPageData);
-
-                        console.info(__filename,'scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
-                    }
-
+                    console.info(__filename, 'scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
                 }
-
 
             }
         }

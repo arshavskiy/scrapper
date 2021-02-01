@@ -7,14 +7,14 @@ const browserObject = require('./lib/browser');
 const scraperController = require('./lib/pageController');
 const {readUrlFile} = require('./fileManager');
 const {saveArticle} = require("./fileManager");
-const {db_em} = require("./fileManager");
+// const {db_em} = require("./fileManager");
+const {db} = require('./fileManager');
 const em = new emitter();
 const arguments = require('./lib/helpers').parseMyArgs();
 
 
 const DATA_FOLDER = path.join(__dirname, '..', 'data');
 let browserInstance = browserObject.startBrowser();
-let finalFilesToScan = {};
 let urlsFromFile;
 
 
@@ -42,10 +42,27 @@ const runPageScraper = (cat, urls) => {
     })
 }
 
-const scrap = async () => {
-    let categories = Object.keys(finalFilesToScan);
+const scrap = async (urls,urlsFromDB) => {
+    let categories = Object.keys(urls);
     for (let i = 0; i < categories.length; i++) {
-        await runPageScraper(categories[i], finalFilesToScan[categories[i]]);
+
+        let list = urls[categories[i]];
+        let category = categories[i];
+
+        const myArrayFiltered = list.filter( el => {
+            return urlsFromDB.some(f => {
+                if (el && f.url){
+                    return !f.url.includes(el);
+                }
+            });
+        });
+
+        // console.log(myArrayFiltered);
+
+        console.log('list -', list.length);
+        console.log('filtered -', myArrayFiltered.length);
+
+        await runPageScraper(category, myArrayFiltered);
     }
 }
 
@@ -54,23 +71,12 @@ const scrapOne = async (arguments) => {
 }
 
 
-if (arguments.url && arguments.cat) {
+let urlsToScrap = () => {
+    let finalFilesToScan = {};
 
-    scrapOne(arguments).then(data => {
-        console.log('done scraping ', finalFilesToScan, ' url')
-    }).catch(err => {
-        return console.log(err)
-    });
-
-} else {
-
-    readUrlFile(DATA_FOLDER, data => {
+    return readUrlFile(DATA_FOLDER, data => {
         console.time('read');
         let FOLDER_NAMES = data.filter(files => !files.includes('.'))
-
-        // FOLDER_NAMES.forEach(folder => {
-        //     readUrlFile(path.join(__dirname, 'data', folder), cb);
-        // });
 
         if (arguments.cat) {
             FOLDER_NAMES = [arguments.cat];
@@ -79,25 +85,50 @@ if (arguments.url && arguments.cat) {
         FOLDER_NAMES.forEach(folder => {
             const FILE_NAME = folder + '.urls'
             const PATH = path.join(DATA_FOLDER, folder, FILE_NAME);
+
             urlsFromFile = fs.readFileSync(PATH, 'utf-8');
-            let splittedUrlsFromFile = urlsFromFile.split("\n");
-            finalFilesToScan[folder] = splittedUrlsFromFile;
+            let splitUrlsFromFile = urlsFromFile.split("\n");
 
-            console.log('read ', splittedUrlsFromFile.length, ' urls')
+            finalFilesToScan[folder] = splitUrlsFromFile;
+
+            console.log('read ', splitUrlsFromFile.length, ' urls')
         })
-
-
         console.timeEnd('read');
+        return finalFilesToScan;
+    });
+}
 
-        scrap().then(data => {
-            console.log('done scraping ', finalFilesToScan, ' urls')
+function allCurrentData() {
+    return new Promise(resolve => {
+        db.find({}, (err, docs) => {
+            if (err) {
+                console.log(__filename, err);
+                return
+            }
+            resolve(docs);
+        });
+    });
+}
+
+if (arguments.url && arguments.cat) {
+
+    scrapOne(arguments).then(data => {
+        console.log('done scraping ', arguments.url, ' url')
+    }).catch(err => {
+        return console.log(err)
+    });
+
+} else {
+    let tempUrlsToScrap = urlsToScrap();
+
+    allCurrentData().then(dataBase => {
+        console.log('dataBase -', dataBase.length);
+        scrap(tempUrlsToScrap, dataBase).then(data => {
+            console.log('done scraping ', tempUrlsToScrap.length, ' urls')
         }).catch(err => {
             return console.log(err)
         });
-
     });
-
-
 }
 
 
@@ -121,13 +152,13 @@ em.addListener('scraped missing', function (data) {
 
 });
 
-db_em.addListener('db_added', function (data) {
+db.em.addListener('db_added', function (data) {
     console.debug(__filename, data);
 });
-db_em.addListener('db_found', function (data) {
+db.em.addListener('db_found', function (data) {
     // console.debug('db_found :', data.url);
 });
-db_em.addListener('missing_db', function (data) {
+db.em.addListener('missing_db', function (data) {
     // console.debug('missing_db :', data.url);
 });
 // Pass the browser instance to the scraper controller

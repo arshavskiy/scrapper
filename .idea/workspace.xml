@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="fix bug">
+    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/dbManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/dbManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/fileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/fileManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/lib/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/helpers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/lib/pageScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/pageScraper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/readUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/readUrls.js" afterDir="false" />
     </list>
@@ -47,7 +46,8 @@
       <workItem from="1612158823476" duration="31000" />
       <workItem from="1612166099410" duration="4146000" />
       <workItem from="1612188194185" duration="2555000" />
-      <workItem from="1612192088988" duration="1921000" />
+      <workItem from="1612192088988" duration="3137000" />
+      <workItem from="1612202653752" duration="6596000" />
     </task>
     <task id="LOCAL-00001" summary="db added">
       <created>1612174236739</created>
@@ -77,7 +77,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612191712909</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactor">
+      <created>1612194258057</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1612194258057</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,7 +107,8 @@
     <MESSAGE value="bug fix" />
     <MESSAGE value="file moved" />
     <MESSAGE value="fix bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
+    <MESSAGE value="refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -117,14 +125,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/server/lib/pageScraper.js</url>
-          <line>105</line>
-          <option name="timeStamp" value="12" />
+          <line>17</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/server/lib/pageScraper.js</url>
-          <line>125</line>
+          <line>93</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="13" />
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

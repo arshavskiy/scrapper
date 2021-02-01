@@ -55,17 +55,17 @@ function addMissingDataToDB(data) {
         'date_added': Date.now(),
     }
 
-    let missingFound = dbMissing.find({url: scrapedMissingData.url}, function (err, docs) {
-        // If no document is found, docs is equal to []
-        if (err) console.log(err);
-        if (docs) {
-            console.info(__filename, 'missing_db duplicate found', docs.url);
-            db.em.emit('missing_db', docs);
-        }
-        return docs;
-    });
-
-    if (!missingFound) {
+    // let missingFound = dbMissing.find({url: scrapedMissingData.url}, function (err, docs) {
+    //     // If no document is found, docs is equal to []
+    //     if (err) console.log(err);
+    //     if (docs) {
+    //         console.info(__filename, 'missing_db duplicate found', docs.url);
+    //         db.em.emit('missing_db', docs);
+    //     }
+    //     return docs;
+    // });
+    //
+    // if (!missingFound) {
 
         dbMissing.insert(scrapedMissingData, function (err, newDoc) {
             if (err) {
@@ -73,7 +73,7 @@ function addMissingDataToDB(data) {
 
             }
         });
-    }
+    // }
 
 }
 
