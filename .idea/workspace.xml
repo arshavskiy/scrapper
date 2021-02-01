@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="" />
+    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/dbManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/dbManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/browser.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/browser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/fileManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/linksScaper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/linksScaper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/pageScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/pageScraper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/readUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/readUrls.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +28,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="readUrls.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="server/readUrls.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -31,10 +45,35 @@
       <option name="presentableId" value="Default" />
       <updated>1612158822159</updated>
       <workItem from="1612158823476" duration="31000" />
+      <workItem from="1612166099410" duration="2505000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/lib/linksScaper.js</url>
+          <line>49</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/lib/linksScaper.js</url>
+          <line>37</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/fileManager.js</url>
+          <line>182</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

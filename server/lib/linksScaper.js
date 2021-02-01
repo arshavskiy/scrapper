@@ -1,4 +1,4 @@
-const {saveCategoryUrls} = require('./fileManager');
+const {saveCategoryUrls} = require('../fileManager');
 
 
 const scraperObjectLinks = {

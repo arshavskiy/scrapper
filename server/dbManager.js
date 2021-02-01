@@ -1,7 +1,7 @@
 // const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const {readUrlFile} = require('./lib/fileManager');
+const {readUrlFile} = require('fileManager');
 
 const DATA_FOLDER = path.join(__dirname, '..', 'data');
 let finalFilesToScan = {};

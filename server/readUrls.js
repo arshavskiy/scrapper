@@ -5,9 +5,9 @@ const emitter = require('events').EventEmitter;
 
 const browserObject = require('./lib/browser');
 const scraperController = require('./lib/pageController');
-const {readUrlFile} = require('./lib/fileManager');
-const {saveArticle} = require("./lib/fileManager");
-const {db_em} = require("./lib/fileManager");
+const {readUrlFile} = require('./fileManager');
+const {saveArticle} = require("./fileManager");
+const {db_em} = require("./fileManager");
 const em = new emitter();
 const arguments = require('./lib/helpers').parseMyArgs();
 
@@ -37,7 +37,7 @@ const runPageScraper = (cat, urls) => {
             });
         } catch (e) {
             console.error(e);
-            return reject(e);
+            // return reject(e);
         }
     })
 }
@@ -111,12 +111,21 @@ em.addListener('scraped', function (data) {
     });
 
 });
+em.addListener('scraped missing', function (data) {
+
+    saveArticle(data, true).then(err => {
+        if (err) {
+            console.error(err);
+        }
+    });
+
+});
 
 db_em.addListener('db_added', function (data) {
-    console.dir({data});
+    console.debug(__filename, data);
 });
 db_em.addListener('db_found', function (data) {
-    console.info('db_found :', data);
+    console.debug('db_found :', data.url);
 });
 
 // Pass the browser instance to the scraper controller
