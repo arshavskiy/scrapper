@@ -109,14 +109,14 @@ const scraperObject = {
                 currentPageData = await pagePromise(url);
 
                 if (currentPageData && currentPageData.body) {
-                    currentPageData.url = url.includes('?') ? url.split['?'].pop() : url;
+                    currentPageData.url = url ? (url.includes('?') ? url.split['?'].pop() : url) : 'no url?';
                     currentPageData.category = category;
                     em.emit('scraped', currentPageData);
 
                     console.info('scraped :', i + 1, 'of ', urls.length, url);
 
                 } else {
-                    currentPageData.url = url.includes('?') ? url.split['?'].pop() : url;
+                    currentPageData.url = url ? (url.includes('?') ? url.split['?'].pop() : url) : 'no url?';
                     currentPageData.category = category;
                     em.emit('scraped missing', currentPageData);
 
