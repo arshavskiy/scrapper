@@ -125,6 +125,7 @@ if (arguments.url && arguments.cat) {
         console.log('dataBase -', dataBase.length);
         scrap(tempUrlsToScrap, dataBase).then(data => {
             console.log('done scraping ', tempUrlsToScrap.length, ' urls')
+            process.exit(0);
         }).catch(err => {
             return console.log(err)
         });
@@ -152,16 +153,15 @@ em.addListener('scraped missing', function (data) {
 
 });
 
-db.em.addListener('db_added', function (data) {
-    console.debug(__filename, data);
-});
-db.em.addListener('db_found', function (data) {
+// db.em.addListener('db_added', function (data) {
+    // console.debug(__filename, data);
+// });
+// db.em.addListener('db_found', function (data) {
     // console.debug('db_found :', data.url);
-});
-db.em.addListener('missing_db', function (data) {
+// });
+// db.em.addListener('missing_db', function (data) {
     // console.debug('missing_db :', data.url);
-});
-// Pass the browser instance to the scraper controller
-// process.exit(0);
+// });
+
 
 
