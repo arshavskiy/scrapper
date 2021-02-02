@@ -89,18 +89,20 @@ const scraperObject = {
                         });
                     }
                 } else {
-                    reject('500');
+                    em.emit('scraped missing', urls);
+                    console.info('500 on :', i + 1, 'of ', urls.length, urls);
+                    // reject('500');
                 }
                 await newPage.close();
                 console.timeEnd('scraped');
                 resolve(dataObj);
             } catch (e) {
-                console.error(e);
+                console.log(e);
                 // reject(e);
             }
 
         }).catch(e => {
-            console.error(e);
+            console.log(e);
         });
 
         if (typeof urls === "string") {
@@ -128,7 +130,6 @@ const scraperObject = {
                         em.emit('scraped missing', currentPageData);
                         console.info('scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
                     }
-                    continue;
                 }
             } catch (e) {
                 console.log(e);

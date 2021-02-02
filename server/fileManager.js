@@ -7,13 +7,15 @@ const Datastore = require('nedb');
 
 console.time('db loaded');
 console.time('dbMissing loaded');
+console.time('db_urls loaded');
 
 FILE_DB = path.join(__dirname, './db/data.db');
+FILE_DB_URLS = path.join(__dirname, './db/data_urls.db');
 FILE_DB_ERR = path.join(__dirname, './db/data_err.db');
-
 
 const db = new Datastore({filename: FILE_DB});
 const dbMissing = new Datastore({filename: FILE_DB_ERR});
+const db_urls = new Datastore({filename: FILE_DB_URLS});
 
 db.loadDatabase(function (err) {
     if (err) console.log('db', err);
@@ -22,6 +24,10 @@ db.loadDatabase(function (err) {
 dbMissing.loadDatabase(function (err) {
     if (err) console.log('FILE_DB_ERR', err);
     console.timeEnd('dbMissing loaded');
+});
+db_urls.loadDatabase(function (err) {
+    if (err) console.log('FILE_DB_URLS', err);
+    console.timeEnd('db_urls loaded');
 });
 
 db.em = new emitter();
@@ -144,6 +150,15 @@ async function saveCategoryUrls(category, urls) {
     }
 
     const fileName = path.join(__dirname, '../data', category, category + '.urls');
+
+    db_urls.insert({category:category, url:urls}, function (err, newDoc) {
+        if (err) {
+            return console.error(err);
+        }
+        // db.em.emit('db_urls added', newDoc.url);
+        console.log("db_urls updated: ", newDoc.url);
+    });
+
 
     fs.appendFile(fileName, urls.join('\r\n'), 'utf8', err => {
         if (err) {

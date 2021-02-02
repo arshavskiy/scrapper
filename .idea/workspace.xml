@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="small">
+    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="links update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/технологии/технологии.urls" beforeDir="false" afterPath="$PROJECT_DIR$/data/технологии/технологии.urls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/финансы/финансы.urls" beforeDir="false" afterPath="$PROJECT_DIR$/data/финансы/финансы.urls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/хакеры/хакеры.urls" beforeDir="false" afterPath="$PROJECT_DIR$/data/хакеры/хакеры.urls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/dbManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/dbManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/fileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/fileManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/getUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/getUrls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/lib/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/helpers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/lib/pageScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/pageScraper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/readUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/readUrls.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +35,7 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
-    <configuration name="readUrls.js" type="NodeJSConfigurationType" nameIsGenerated="true" path-to-js-file="server/readUrls.js" working-dir="$PROJECT_DIR$">
+    <configuration name="readUrls.js" type="NodeJSConfigurationType" application-parameters=" url=https://rg.ru/2021/01/29/kak-stat-videoblogerom-i-skolko-eto-stoit.html cat=test " nameIsGenerated="true" path-to-js-file="server/readUrls.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
   </component>
@@ -46,7 +51,9 @@
       <workItem from="1612166099410" duration="4146000" />
       <workItem from="1612188194185" duration="2555000" />
       <workItem from="1612192088988" duration="3137000" />
-      <workItem from="1612202653752" duration="8148000" />
+      <workItem from="1612202653752" duration="9009000" />
+      <workItem from="1612213693325" duration="713000" />
+      <workItem from="1612246173283" duration="3037000" />
     </task>
     <task id="LOCAL-00001" summary="db added">
       <created>1612174236739</created>
@@ -97,7 +104,21 @@
       <option name="project" value="LOCAL" />
       <updated>1612212105334</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="small fixes for no argumaents">
+      <created>1612212715398</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1612212715398</updated>
+    </task>
+    <task id="LOCAL-00009" summary="links update">
+      <created>1612214617021</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1612214617021</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,28 +144,8 @@
     <MESSAGE value="refactor" />
     <MESSAGE value="promises added and some filter" />
     <MESSAGE value="small" />
-    <option name="LAST_COMMIT_MESSAGE" value="small" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/lib/linksScaper.js</url>
-          <line>49</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/lib/linksScaper.js</url>
-          <line>37</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/server/lib/pageScraper.js</url>
-          <line>17</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="small fixes for no argumaents" />
+    <MESSAGE value="links update" />
+    <option name="LAST_COMMIT_MESSAGE" value="links update" />
   </component>
 </project>

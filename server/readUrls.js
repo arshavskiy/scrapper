@@ -11,9 +11,10 @@ const {saveArticle} = require("./fileManager");
 const {db} = require('./fileManager');
 const em = new emitter();
 const arguments = require('./lib/helpers').parseMyArgs();
+const {urlsToScrap} = require('./lib/helpers');
 
 
-const DATA_FOLDER = path.join(__dirname, '..', 'data');
+// const DATA_FOLDER = path.join(__dirname, '..', 'data');
 let browserInstance = browserObject.startBrowser();
 let urlsFromFile;
 
@@ -68,34 +69,6 @@ const scrap = async (urls,urlsFromDB) => {
 
 const scrapOne = async (arguments) => {
     await runPageScraper(arguments.cat, arguments.url)
-}
-
-
-let urlsToScrap = () => {
-    let finalFilesToScan = {};
-
-    return readUrlFile(DATA_FOLDER, data => {
-        console.time('read');
-        let FOLDER_NAMES = data.filter(files => !files.includes('.'))
-
-        if (arguments.cat) {
-            FOLDER_NAMES = [arguments.cat];
-        }
-
-        FOLDER_NAMES.forEach(folder => {
-            const FILE_NAME = folder + '.urls'
-            const PATH = path.join(DATA_FOLDER, folder, FILE_NAME);
-
-            urlsFromFile = fs.readFileSync(PATH, 'utf-8');
-            let splitUrlsFromFile = urlsFromFile.split("\n");
-
-            finalFilesToScan[folder] = splitUrlsFromFile;
-
-            console.log('read ', splitUrlsFromFile.length, ' urls')
-        })
-        console.timeEnd('read');
-        return finalFilesToScan;
-    });
 }
 
 function allCurrentData() {

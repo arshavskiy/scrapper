@@ -1,8 +1,42 @@
+const path = require('path');
+const fs = require('fs');
+const {readUrlFile} = require('../fileManager');
+
+
 const parseMyArgs = () => {
     const args = process.argv.slice(2);
     let argsMap = {};
     args.map(ra => argsMap[ra.split('=')[0]] = ra.split('=')[1]);
     return argsMap;
+}
+
+const DATA_FOLDER = path.join(__dirname, '../..', 'data');
+
+const urlsToScrap = () => {
+    let finalFilesToScan = {};
+
+    return readUrlFile(DATA_FOLDER, data => {
+        console.time('read');
+        let FOLDER_NAMES = data.filter(files => !files.includes('.'))
+
+        if (arguments.cat) {
+            FOLDER_NAMES = [arguments.cat];
+        }
+
+        FOLDER_NAMES.forEach(folder => {
+            const FILE_NAME = folder + '.urls'
+            const PATH = path.join(DATA_FOLDER, folder, FILE_NAME);
+
+            let urlsFromFile = fs.readFileSync(PATH, 'utf-8');
+            let splitUrlsFromFile = urlsFromFile.split("\n");
+
+            finalFilesToScan[folder] = splitUrlsFromFile;
+
+            console.log('read ', splitUrlsFromFile.length, ' urls')
+        })
+        console.timeEnd('read');
+        return finalFilesToScan;
+    });
 }
 
 function removeDuplicateLine(newCode) {
@@ -65,5 +99,6 @@ function removeDuplicateLine(newCode) {
 }
 
 module.exports = {
-    parseMyArgs
+    parseMyArgs,
+    urlsToScrap
 }
