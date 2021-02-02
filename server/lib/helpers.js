@@ -12,33 +12,6 @@ const parseMyArgs = () => {
 
 const DATA_FOLDER = path.join(__dirname, '../..', 'data');
 
-const urlsToScrap = () => {
-    let finalFilesToScan = {};
-
-    return readUrlFile(DATA_FOLDER, data => {
-        console.time('read');
-        let FOLDER_NAMES = data.filter(files => !files.includes('.'))
-
-        if (arguments.cat) {
-            FOLDER_NAMES = [arguments.cat];
-        }
-
-        FOLDER_NAMES.forEach(folder => {
-            const FILE_NAME = folder + '.urls'
-            const PATH = path.join(DATA_FOLDER, folder, FILE_NAME);
-
-            let urlsFromFile = fs.readFileSync(PATH, 'utf-8');
-            let splitUrlsFromFile = urlsFromFile.split("\n");
-
-            finalFilesToScan[folder] = splitUrlsFromFile;
-
-            console.log('read ', splitUrlsFromFile.length, ' urls')
-        })
-        console.timeEnd('read');
-        return finalFilesToScan;
-    });
-}
-
 function removeDuplicateLine(newCode) {
     // newCode = newCode.trim();
     let match = /\r\n/.test(newCode);
@@ -95,8 +68,48 @@ function removeDuplicateLine(newCode) {
 
     //Assemble the lines back together
     newCode = newCodeArray.join(theSep);
-    return newCode;
+    return {
+        cleanFile: newCode,
+        newCode: newCodeArray
+    };
 }
+
+const urlsToScrap = () => {
+    let finalFilesToScan = {};
+
+    return readUrlFile(DATA_FOLDER, data => {
+        console.time('read');
+        let FOLDER_NAMES = data.filter(files => !files.includes('.'))
+
+        if (arguments.cat) {
+            FOLDER_NAMES = [arguments.cat];
+        }
+
+        FOLDER_NAMES.forEach(folder => {
+            const FILE_NAME = folder + '.urls'
+            const __PATH = path.join(DATA_FOLDER, folder, FILE_NAME);
+
+            let urlsFromFile = fs.readFileSync(__PATH, 'utf-8');
+            let cleanDataFromFile = removeDuplicateLine(urlsFromFile);
+
+            fs.writeFile(__PATH, cleanDataFromFile.cleanFile, 'utf8', err => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("cleanFile updated: ", __PATH);
+            });
+
+            finalFilesToScan[folder] = cleanDataFromFile.newCode;
+            console.log('read ', cleanDataFromFile.newCode.length, ' urls')
+        })
+        console.timeEnd('read');
+        return finalFilesToScan;
+    });
+}
+
+urlsToScrap();
+
 
 module.exports = {
     parseMyArgs,
