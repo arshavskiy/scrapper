@@ -41,6 +41,8 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
+                        }).catch(e=>{
+                            console.log(e);
                         });
                         dataObj['date'] = await newPage.$eval('.article-stat__date-container', elm => {
                             if (elm && elm.innerText) {
@@ -48,6 +50,8 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
+                        }).catch(e=>{
+                            console.log(e);
                         });
                         dataObj['imageUrl'] = await newPage.$eval('.article__middle img', img => {
                             if (img && img.src) {
@@ -55,6 +59,8 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
+                        }).catch(e=>{
+                            console.log(e);
                         });
                         dataObj['body'] = await newPage.evaluate(() => {
                             let articleBody = '';
@@ -62,6 +68,8 @@ const scraperObject = {
                             for (let element of elements)
                                 articleBody += element.innerText;
                             return articleBody;
+                        }).catch(e=>{
+                            console.log(e);
                         });
 
                     } else {
@@ -72,6 +80,8 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
+                        }).catch(e=>{
+                            console.log(e);
                         });
                         dataObj['imageUrl'] = await newPage.$eval('img', img => {
                             if (img && img.src) {
@@ -79,6 +89,8 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
+                        }).catch(e=>{
+                            console.log(e);
                         });
                         dataObj['body'] = await newPage.evaluate(() => {
                             let articleBody = '';
@@ -86,6 +98,8 @@ const scraperObject = {
                             for (let element of elements)
                                 articleBody += element.innerText;
                             return articleBody;
+                        }).catch(e=>{
+                            console.log(e);
                         });
                     }
                 } else {
@@ -98,7 +112,9 @@ const scraperObject = {
                 resolve(dataObj);
             } catch (e) {
                 console.log(e);
-                // reject(e);
+                await newPage.close();
+                console.timeEnd('scraped');
+                resolve({'err':e});
             }
 
         }).catch(e => {
