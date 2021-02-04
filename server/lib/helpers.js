@@ -86,8 +86,8 @@ const urlsToScrap = () => {
         }
 
         FOLDER_NAMES.forEach(folder => {
-            const TEMP_PATH = folder + '.temp_urls'
-            const PATH = folder + '.temp'
+            const TEMP_PATH = folder + '.temp_urls';
+            const PATH = folder + '.temp';
             const TEMP_FILE = path.join(DATA_FOLDER, folder, TEMP_PATH);
             const FILE = path.join(DATA_FOLDER, folder, PATH);
 
@@ -104,11 +104,11 @@ const urlsToScrap = () => {
 
             finalFilesToScan[folder] = cleanDataFromFile.newCode;
             console.log('read ', cleanDataFromFile.newCode.length, ' urls')
-        })
+        });
         console.timeEnd('read');
         return finalFilesToScan;
     });
-}
+};
 
 urlsToScrap();
 
@@ -116,4 +116,4 @@ urlsToScrap();
 module.exports = {
     parseMyArgs,
     urlsToScrap
-}
+};

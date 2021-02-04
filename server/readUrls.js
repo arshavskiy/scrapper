@@ -1,13 +1,10 @@
-const path = require('path');
-const fs = require('fs');
 const emitter = require('events').EventEmitter;
+const em = new emitter();
 const browserObject = require('./lib/browser');
 const scraperController = require('./lib/pageController');
-const {readUrlFile} = require('./fileManager');
 const {saveArticle} = require("./fileManager");
 // const {db_em} = require("./fileManager");
 const {db} = require('./fileManager');
-const em = new emitter();
 const arguments = require('./lib/helpers').parseMyArgs();
 const {urlsToScrap} = require('./lib/helpers');
 
@@ -39,35 +36,33 @@ const runPageScraper = (cat, urls) => {
             // return reject(e);
         }
     })
-}
+};
 
-const scrap = async (urls,urlsFromDB) => {
+const scrap = async (urls, urlsFromDB) => {
     let categories = Object.keys(urls);
     for (let i = 0; i < categories.length; i++) {
 
         let list = urls[categories[i]];
         let category = categories[i];
 
-        const myArrayFiltered = list.filter( el => {
+        const myArrayFiltered = list.filter(el => {
             return urlsFromDB.some(f => {
-                if (el && f.url){
-                    return !f.url.includes(el);
+                if (el && f.url) {
+                    return !el.includes(f.url);
                 }
             });
         });
-
-        // console.log(myArrayFiltered);
 
         console.log('list -', list.length);
         console.log('filtered -', myArrayFiltered.length);
 
         await runPageScraper(category, myArrayFiltered);
     }
-}
+};
 
 const scrapOne = async (arguments) => {
     await runPageScraper(arguments.cat, arguments.url)
-}
+};
 
 function allCurrentData() {
     return new Promise(resolve => {
@@ -95,43 +90,45 @@ if (arguments.url && arguments.cat) {
     allCurrentData().then(dataBase => {
         console.log('dataBase -', dataBase.length);
         scrap(tempUrlsToScrap, dataBase).then(data => {
-            console.log('done scraping ', tempUrlsToScrap.length, ' urls')
+            console.log('done scraping ', tempUrlsToScrap.length, ' urls');
             process.exit(0);
         }).catch(err => {
-            return console.log(err)
+            console.log(err);
+            process.exit(1);
         });
     });
 }
 
-
 //Subscribe FirstEvent
-em.addListener('scraped', function (data) {
-
+em.addListener('URL_SCRAPPED', function (data) {
     saveArticle(data).then(err => {
         if (err) {
-            console.error(err);
+            console.log('URL_SCRAPPED', err);
         }
     });
-
 });
-em.addListener('scraped missing', function (data) {
 
+em.addListener('MISSING_READ_URLS', function (data) {
     saveArticle(data, true).then(err => {
         if (err) {
-            console.error(err);
+            console.log('MISSING_READ_URLS', err);
         }
     });
-
 });
 
+em.addListener('ERROR_SCRAPPING', function (data) {
+    console.log('ERROR_SCRAPPING data', data);
+});
+
+
 // db.em.addListener('db_added', function (data) {
-    // console.debug(__filename, data);
+// console.debug(__filename, data);
 // });
 // db.em.addListener('db_found', function (data) {
-    // console.debug('db_found :', data.url);
+// console.debug('db_found :', data.url);
 // });
 // db.em.addListener('missing_db', function (data) {
-    // console.debug('missing_db :', data.url);
+// console.debug('missing_db :', data.url);
 // });
 
 

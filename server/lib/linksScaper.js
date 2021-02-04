@@ -2,7 +2,7 @@ const {saveCategoryUrls} = require('../fileManager');
 
 
 const scraperObjectLinks = {
-    async scraperLinks(browser, category, url) {
+    async scraperLinks(browser, category, url, em) {
 
         let pagePromise = (category, url) => new Promise(async (resolve, reject) => {
             url = url || 'http://zen.yandex.ru/';
@@ -35,30 +35,15 @@ const scraperObjectLinks = {
         if (typeof category === "object"){
             for (let i = 0; i < category.length; i++) {
                 currentPageData = await pagePromise(category[i], url);
-                saveCategoryUrls(category[i], currentPageData).then(err => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(__filename, 'category saved');
-                        console.log(__filename, currentPageData);
+                em.emit('SAVE_URL', {'url':currentPageData ,'category': category[i]});
 
-                    }
-                })
             }
         } else {
             currentPageData = await pagePromise(category, url);
-            saveCategoryUrls(category, currentPageData).then(err => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log(__filename, 'category saved');
-                    console.log(__filename, currentPageData);
-
-                }
-            })
+            em.emit('SAVE_URL', {'url':currentPageData ,'category': category});
         }
     }
-}
+};
 
 
 module.exports = scraperObjectLinks;

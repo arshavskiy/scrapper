@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const util = require('util')
+const util = require('util');
 const emitter = require('events').EventEmitter;
 
 const Datastore = require('nedb');
@@ -58,8 +58,8 @@ function addMissingDataToDB(data) {
         'url': data.url,
         'category': data.category,
         'title': data.title,
-        'date_added': Date.now(),
-    }
+        'date_added': Date.now()
+    };
 
     // let missingFound = dbMissing.find({url: scrapedMissingData.url}, function (err, docs) {
     //     // If no document is found, docs is equal to []
@@ -87,6 +87,7 @@ async function saveArticle(data, missing) {
     console.time('starting to write');
 
     if (missing) {
+        console.log('missing: ', data);
         addMissingDataToDB(data);
     }
 
@@ -149,18 +150,21 @@ async function saveCategoryUrls(category, urls) {
         }
     }
 
-    const fileName = path.join(__dirname, '../data', category, category + '.urls');
-
-    db_urls.insert({category:category, url:urls}, function (err, newDoc) {
-        if (err) {
-            return console.error(err);
-        }
-        // db.em.emit('db_urls added', newDoc.url);
-        console.log("db_urls updated: ", newDoc.url);
+    urls.forEach(url=>{
+        db_urls.insert({category:category, url:url}, function (err, newDoc) {
+            if (err) {
+                return console.error(err);
+            }
+            // db.em.emit('db_urls added', newDoc.url);
+            console.log("db_urls updated: ", newDoc.url);
+        })
     });
 
 
-    fs.appendFile(fileName, urls.join('\r\n'), 'utf8', err => {
+    const fileName = path.join(__dirname, '../data', category, category + '.temp_urls');
+    let dataToSave = urls.join('\r\n');
+
+    fs.appendFile(fileName, dataToSave, 'utf8', err => {
         if (err) {
             console.error(err);
         }

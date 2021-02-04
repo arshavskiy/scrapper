@@ -1,6 +1,7 @@
 const scraperObject = {
     async scraper(browser, category, urls, em) {
         let currentPageData = {};
+        let currentPagesScaned = [];
 
         const baseUrl = (url) => {
             let temp = url;
@@ -8,9 +9,9 @@ const scraperObject = {
                 temp = url.split('?')[0];
             }
             return temp;
-        }
+        };
 
-        const pagePromise = (link) => new Promise(async (resolve, reject) => {
+        const pagePromise = (link, index) => new Promise(async (resolve, reject) => {
             let dataObj = {};
             console.time('scraped');
 
@@ -41,7 +42,7 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
                         dataObj['date'] = await newPage.$eval('.article-stat__date-container', elm => {
@@ -50,7 +51,7 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
                         dataObj['imageUrl'] = await newPage.$eval('.article__middle img', img => {
@@ -59,7 +60,7 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
                         dataObj['body'] = await newPage.evaluate(() => {
@@ -68,7 +69,7 @@ const scraperObject = {
                             for (let element of elements)
                                 articleBody += element.innerText;
                             return articleBody;
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
 
@@ -80,7 +81,7 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
                         dataObj['imageUrl'] = await newPage.$eval('img', img => {
@@ -89,7 +90,7 @@ const scraperObject = {
                             } else {
                                 return null;
                             }
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
                         dataObj['body'] = await newPage.evaluate(() => {
@@ -98,13 +99,13 @@ const scraperObject = {
                             for (let element of elements)
                                 articleBody += element.innerText;
                             return articleBody;
-                        }).catch(e=>{
+                        }).catch(e => {
                             console.log(e);
                         });
                     }
                 } else {
-                    em.emit('scraped missing', urls);
-                    console.info('500 on :', i + 1, 'of ', urls.length, urls);
+                    em.emit('MISSING_READ_URLS', link);
+                    console.info('500 on :', index + 1, 'of ', urls.length);
                     // reject('500');
                 }
                 await newPage.close();
@@ -112,9 +113,8 @@ const scraperObject = {
                 resolve(dataObj);
             } catch (e) {
                 console.log(e);
-                await newPage.close();
                 console.timeEnd('scraped');
-                resolve({'err':e});
+                resolve({'err': e});
             }
 
         }).catch(e => {
@@ -133,26 +133,30 @@ const scraperObject = {
                     let url = urls[i];
                     console.info('scraping', i + 1, baseUrl(url));
 
-                    currentPageData = await pagePromise(url).catch(err => {
-                        console.log(err);
+                    currentPageData = await pagePromise(url, i).catch(err => {
+                        console.log('pagePromise got error on:', i, err);
+                        currentPagesScaned.push(url);
+                        em.emit('ERROR_SCRAPPING', currentPagesScaned);
+                        return currentPagesScaned;
                     });
+
                     currentPageData.url = baseUrl(url);
                     currentPageData.category = category;
 
                     if (currentPageData && currentPageData.body) {
-                        em.emit('scraped', currentPageData);
+                        em.emit('URL_SCRAPPED', currentPageData);
                         console.info('scraped :', i + 1, 'of ', urls.length, currentPageData.title);
                     } else {
-                        em.emit('scraped missing', currentPageData);
+                        em.emit('MISSING_READ_URLS', currentPageData);
                         console.info('scraped :', i + 1, 'of ', urls.length, url, 'but could not find p elements');
                     }
                 }
-            } catch (e) {
-                console.log(e);
+            } catch (err) {
+                console.log('pagePromise catch', err);
             }
 
         }
     }
-}
+};
 
 module.exports = scraperObject;

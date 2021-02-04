@@ -6,7 +6,9 @@ async function scrapeAll(browserInstance, cat, urls, em) {
     try {
         browser = await browserInstance;
         // console.log(__filename, urls.length);
-        await pageScraper.scraper(browser, cat, urls, em).catch(err=>{
+        await pageScraper.scraper(browser, cat, urls, em).then(back=>{
+            console.log('data back', back);
+        }).catch(err=>{
             return console.error(err);
         });
         await browser.close();
@@ -16,4 +18,4 @@ async function scrapeAll(browserInstance, cat, urls, em) {
     }
 }
 
-module.exports = (browserInstance, cat, urls, em) => scrapeAll(browserInstance, cat, urls, em)
+module.exports = (browserInstance, cat, urls, em) => scrapeAll(browserInstance, cat, urls, em);
