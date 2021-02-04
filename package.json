@@ -5,7 +5,8 @@
   "main": "server/getUrls.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/getUrls.js"
+    "getUrls": "sudo node ./server/getUrls.js",
+    "readUrls": "sudo node ./server/readUrls.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="links update">
+    <list default="true" id="da95d4c7-fcac-4608-b3e4-4795e4b61632" name="Default Changelist" comment="clean duplicates on read added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/технологии/технологии.urls" beforeDir="false" afterPath="$PROJECT_DIR$/data/технологии/технологии.urls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/финансы/финансы.urls" beforeDir="false" afterPath="$PROJECT_DIR$/data/финансы/финансы.urls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/хакеры/хакеры.urls" beforeDir="false" afterPath="$PROJECT_DIR$/data/хакеры/хакеры.urls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/dbManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/dbManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/fileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/fileManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/технологии/технологии.urls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/финансы/финансы.urls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/хакеры/хакеры.urls" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/lib/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/lib/pageScraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/lib/pageScraper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/readUrls.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/readUrls.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +50,10 @@
       <workItem from="1612192088988" duration="3137000" />
       <workItem from="1612202653752" duration="9009000" />
       <workItem from="1612213693325" duration="713000" />
-      <workItem from="1612246173283" duration="3037000" />
+      <workItem from="1612246173283" duration="3140000" />
+      <workItem from="1612253648875" duration="462000" />
+      <workItem from="1612282342705" duration="3809000" />
+      <workItem from="1612426124070" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="db added">
       <created>1612174236739</created>
@@ -118,7 +118,28 @@
       <option name="project" value="LOCAL" />
       <updated>1612214617021</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refactor">
+      <created>1612249649668</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1612249649668</updated>
+    </task>
+    <task id="LOCAL-00011" summary="error cashed">
+      <created>1612256135786</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1612256135787</updated>
+    </task>
+    <task id="LOCAL-00012" summary="clean duplicates on read added">
+      <created>1612302279455</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1612302279455</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,11 +162,24 @@
     <MESSAGE value="bug fix" />
     <MESSAGE value="file moved" />
     <MESSAGE value="fix bug" />
-    <MESSAGE value="refactor" />
     <MESSAGE value="promises added and some filter" />
     <MESSAGE value="small" />
     <MESSAGE value="small fixes for no argumaents" />
     <MESSAGE value="links update" />
-    <option name="LAST_COMMIT_MESSAGE" value="links update" />
+    <MESSAGE value="refactor" />
+    <MESSAGE value="error cashed" />
+    <MESSAGE value="clean duplicates on read added" />
+    <option name="LAST_COMMIT_MESSAGE" value="clean duplicates on read added" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/server/lib/pageScraper.js</url>
+          <line>12</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

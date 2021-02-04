@@ -1,8 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const emitter = require('events').EventEmitter;
-
-
 const browserObject = require('./lib/browser');
 const scraperController = require('./lib/pageController');
 const {readUrlFile} = require('./fileManager');

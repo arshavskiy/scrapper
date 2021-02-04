@@ -86,18 +86,20 @@ const urlsToScrap = () => {
         }
 
         FOLDER_NAMES.forEach(folder => {
-            const FILE_NAME = folder + '.urls'
-            const __PATH = path.join(DATA_FOLDER, folder, FILE_NAME);
+            const TEMP_PATH = folder + '.temp_urls'
+            const PATH = folder + '.temp'
+            const TEMP_FILE = path.join(DATA_FOLDER, folder, TEMP_PATH);
+            const FILE = path.join(DATA_FOLDER, folder, PATH);
 
-            let urlsFromFile = fs.readFileSync(__PATH, 'utf-8');
+            let urlsFromFile = fs.readFileSync(TEMP_FILE, 'utf-8');
             let cleanDataFromFile = removeDuplicateLine(urlsFromFile);
 
-            fs.writeFile(__PATH, cleanDataFromFile.cleanFile, 'utf8', err => {
+            fs.writeFile(FILE, cleanDataFromFile.cleanFile, 'utf8', err => {
                 if (err) {
                     console.log(err);
                     return;
                 }
-                console.log("cleanFile updated: ", __PATH);
+                console.log("cleanFile updated: ", PATH);
             });
 
             finalFilesToScan[folder] = cleanDataFromFile.newCode;
