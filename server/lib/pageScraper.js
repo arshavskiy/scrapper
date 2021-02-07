@@ -1,7 +1,7 @@
 const scraperObject = {
     async scraper(browser, category, urls, em) {
         let currentPageData = {};
-        let currentPagesScaned = [];
+        let currentPagesScanned = [];
 
         const baseUrl = (url) => {
             let temp = url;
@@ -133,12 +133,15 @@ const scraperObject = {
                     let url = urls[i];
                     console.info('scraping', i + 1, baseUrl(url));
 
-                    currentPageData = await pagePromise(url, i).catch(err => {
-                        console.log('pagePromise got error on:', i, err);
-                        currentPagesScaned.push(url);
-                        em.emit('ERROR_SCRAPPING', currentPagesScaned);
-                        return currentPagesScaned;
-                    });
+                    currentPageData = await pagePromise(url, i)
+                        .catch(err => {
+                            console.log('pagePromise got error on:', i, err);
+
+                            em.emit('ERROR_SCRAPPING', {currentPagesScanned, category});
+                            return currentPagesScanned;
+                        });
+
+                    currentPagesScanned.push(url);
 
                     currentPageData.url = baseUrl(url);
                     currentPageData.category = category;

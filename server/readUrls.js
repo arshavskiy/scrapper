@@ -3,21 +3,13 @@ const em = new emitter();
 const browserObject = require('./lib/browser');
 const scraperController = require('./lib/pageController');
 const {saveArticle} = require("./fileManager");
-// const {db_em} = require("./fileManager");
 const {db} = require('./fileManager');
 const arguments = require('./lib/helpers').parseMyArgs();
 const {urlsToScrap} = require('./lib/helpers');
 
 
-// const DATA_FOLDER = path.join(__dirname, '..', 'data');
 let browserInstance = browserObject.startBrowser();
 let urlsFromFile;
-
-
-// function cb(newDada) {
-//     let insideFiles = newDada.filter(files => !files.includes('data'));
-//     finalFilesToScan = finalFilesToScan.concat(insideFiles)
-// }
 
 const runPageScraper = (cat, urls) => {
     return new Promise((resolve, reject) => {
@@ -85,6 +77,7 @@ if (arguments.url && arguments.cat) {
     });
 
 } else {
+
     let tempUrlsToScrap = urlsToScrap();
 
     allCurrentData().then(dataBase => {
@@ -99,7 +92,6 @@ if (arguments.url && arguments.cat) {
     });
 }
 
-//Subscribe FirstEvent
 em.addListener('URL_SCRAPPED', function (data) {
     saveArticle(data).then(err => {
         if (err) {
@@ -116,8 +108,8 @@ em.addListener('MISSING_READ_URLS', function (data) {
     });
 });
 
-em.addListener('ERROR_SCRAPPING', function (data) {
-    console.log('ERROR_SCRAPPING data', data);
+em.addListener('ERROR_SCRAPPING', function (...data) {
+    console.log('ERROR_SCRAPPING data', currentPagesScanned, category);
 });
 
 

@@ -1,23 +1,16 @@
 {
-  "name": "scraper",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server/getUrls.js",
+  "name": "scrapper",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "getUrls": "sudo node ./server/getUrls.js",
-    "readUrls": "sudo node ./server/readUrls.js"
+    "start": "node ./bin/www"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "do": "^0.6.1",
-    "nedb": "^1.8.0",
-    "puppeteer": "^5.5.0",
-    "shelljs": "^0.8.4"
-  },
-  "devDependencies": {
-    "express": "^4.17.1",
-    "node-cron": "^2.0.3"
+    "cookie-parser": "^1.4.5",
+    "debug": "~4.3.1",
+    "express": "~4.17.1",
+    "http-errors": "~1.8.0",
+    "morgan": "~1.10.0",
+    "pug": "3.0.0"
   }
 }

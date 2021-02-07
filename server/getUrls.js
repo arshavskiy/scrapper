@@ -20,7 +20,6 @@ if (typeof arguments.cat === "object" || !arguments.cat) {
     });
 }
 
-
 em.addListener('SAVE_URL', data => {
     console.log('SAVE_URL data', data);
     saveCategoryUrls(data.category, data.url).then(err => {
@@ -29,8 +28,7 @@ em.addListener('SAVE_URL', data => {
         } else {
             console.log(__filename, 'category saved');
             console.log(__filename, data);
-
         }
-    })
+    });
     console.log('data', data);
 });

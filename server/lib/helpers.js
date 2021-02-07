@@ -74,6 +74,20 @@ function removeDuplicateLine(newCode) {
     };
 }
 
+const saveScannedUrlsToFile = (blob, folder) => {
+    // const FILE = path.join(DATA_FOLDER, folder, PATH);
+    let cleanDataFromFile = removeDuplicateLine(blob.join(''));
+
+    fs.writeFile(FILE, cleanDataFromFile.cleanFile, 'utf8', err => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log("cleanFile updated: ", PATH);
+    });
+
+};
+
 const urlsToScrap = () => {
     let finalFilesToScan = {};
 
