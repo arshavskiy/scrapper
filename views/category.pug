@@ -6,9 +6,15 @@ block content
 
   section
     each cat in categories
-          nav
-            div
-                a(href=cat.category)= cat.category
+      nav
+        div
+            a(href='/category/'+cat.category)= cat.category
+
+  section
+    select(name="pets" id="pet-select")
+        each d in dates
+            option(value="d.date")= d.date
+
 
   section
     each article, index in articles
@@ -19,3 +25,6 @@ block content
           div= article.title
           div= article.date
           div= article.text
+
+block footer
+    script('/javascripts/footer.js')

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getCategoryByName, getCategories} = require('../server/fileManager');
+const {getCategoryByName, getCategories, getDates} = require('../server/fileManager');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/:categoryName', async function (req, res, next) {
     let temp = req.params.categoryName;
-    console.info(__filename, 'temp',temp);
+    console.info(__filename, 'temp', temp);
     const category = decodeURIComponent(temp);
 
     let data = await getCategoryByName(category).catch(err => {
@@ -19,8 +19,11 @@ router.get('/:categoryName', async function (req, res, next) {
     let categories = await getCategories().catch(err => {
         console.log(err);
     });
+    let dates = await getDates().catch(err => {
+        console.log(err);
+    });
 
-    res.render('category', {categories: categories, articles:data});
+    res.render('category', {categories: categories, articles: data, dates: dates});
 });
 
 module.exports = router;

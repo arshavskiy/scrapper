@@ -215,6 +215,19 @@ function getCategories() {
     });
 }
 
+function getDates() {
+    return new Promise((resolve, reject) => {
+        db_dates.find({}, (err, docs) => {
+            if (err) {
+                console.log(__filename, err);
+                reject(err)
+            }
+            console.log(__filename, docs);
+            resolve(docs);
+        });
+    });
+}
+
 
 module.exports = {
     readUrlFile,
@@ -223,5 +236,6 @@ module.exports = {
     db_em: db.em,
     db: db,
     getCategoryByName: getCategoryByName,
-    getCategories: getCategories
+    getCategories: getCategories,
+    getDates:getDates,
 };
