@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  section
+    each cat in categories
+          nav
+            div
+                a(href=cat.category)= cat.category
+
+  section
+    each article, index in articles
+      if index < 10
+          div
+            a(href=article.url)
+                img(src=article.img alt=article.title loading="lazy" height="200")
+          div= article.title
+          div= article.date
+          div= article.text

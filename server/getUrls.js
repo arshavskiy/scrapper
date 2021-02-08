@@ -16,7 +16,6 @@ if (typeof arguments.cat === "object" || !arguments.cat) {
         console.log(__filename, "done scraping - ", categories);
     }).catch(e => {
         console.error(e);
-
     });
 }
 

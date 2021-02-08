@@ -124,8 +124,6 @@ const urlsToScrap = () => {
     });
 };
 
-urlsToScrap();
-
 
 module.exports = {
     parseMyArgs,

@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "sudo nodemon ./bin/www",
+    "set": "sudo node ./server/getUrls",
+    "get": "sudo node ./server/readUrls"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
@@ -11,6 +13,11 @@
     "express": "~4.17.1",
     "http-errors": "~1.8.0",
     "morgan": "~1.10.0",
-    "pug": "3.0.0"
+    "nedb": "^1.8.0",
+    "pug": "3.0.0",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "puppeteer": "^7.0.1"
   }
 }
