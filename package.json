@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "sudo nodemon ./bin/www",
-    "set": "sudo node ./server/getUrls",
-    "get": "sudo node ./server/readUrls"
+    "start": "nodemon ./bin/www",
+    "set": "node ./server/getUrls",
+    "get": "node ./server/readUrls"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",

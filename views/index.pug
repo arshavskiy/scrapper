@@ -3,3 +3,30 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  section
+    each cat in categories
+      nav
+        div
+          a(href='/category/' + cat.category)= cat.category
+
+  section
+    select(name="dates" id="date-selector")
+      each d, index in dates
+        if index === 1
+          option(value="d.date" selected=true)= d.date
+        else
+          option(value="d.date")= d.date
+
+
+  section
+    each a in articles
+        div
+          a(href=a.url)
+            img(src=a.img alt=a.title loading="lazy" height="200")
+        div= a.title
+        div= a.date
+        div= a.text
+
+
+  script('/javascripts/footer.js')

@@ -36,48 +36,47 @@ const scraperObject = {
 
                     if (newPage.url().includes('//zen.yandex.')) {
 
-                        dataObj['title'] = await newPage.$eval('h1', title => {
-                            if (title && title.innerText) {
-                                return title.innerText;
-                            } else {
-                                return null;
-                            }
-                        }).catch(e => {
-                            console.log(e);
-                        });
-                        dataObj['date'] = await newPage.$eval('.article-stat__date-container', elm => {
-                            if (elm && elm.innerText) {
-                                return elm.innerText;
-                            } else {
-                                return null;
-                            }
-                        }).catch(e => {
-                            console.log(e);
-                        });
-                        dataObj['imageUrl'] = await newPage.$eval('.article__middle img', img => {
-                            if (img && img.src) {
-                                return img.src;
-                            } else {
-                                return null;
-                            }
-                        }).catch(e => {
-                            console.log(e);
-                        });
-                        dataObj['body'] = await newPage.evaluate(() => {
-                            let articleBody = '';
-                            let elements = document.getElementsByClassName('article__middle');
-                            for (let element of elements)
-                                articleBody += element.innerText;
-                            return articleBody;
-                        }).catch(e => {
-                            console.log(e);
-                        });
+                        try {
+                            dataObj.title = await newPage.$eval('h1', title => {
+                                if (title && title.innerText) {
+                                    return title.innerText;
+                                } else {
+                                    return null;
+                                }
+                            });
+                            // dataObj['date'] = await newPage.$eval('.article-stat__date-container', elm => {
+                            //     if (elm && elm.innerText) {
+                            //         return elm.innerText;
+                            //     } else {
+                            //         return null;
+                            //     }
+                            // });
+                            dataObj['imageUrl'] = await newPage.$eval('.article__middle img', img => {
+                                if (img && img.src) {
+                                    return img.src;
+                                } else {
+                                    return null;
+                                }
+                            });
+                            dataObj['body'] = await newPage.evaluate(() => {
+                                let articleBody = '';
+                                let elements = document.getElementsByClassName('article__middle');
+                                for (let element of elements)
+                                    articleBody += element.innerText;
+                                return articleBody;
+                            });
+                        } catch (error) {
+                            console.log(error);
+                            resolve(dataObj);
+                        }
+
+
 
                     } else {
 
-                        dataObj['title'] = await newPage.$eval('h1', title => {
+                        dataObj.title = await newPage.$eval('h1', title => {
                             if (title && title.innerText) {
-                                return title.innerText
+                                return title.innerText;
                             } else {
                                 return null;
                             }
@@ -114,7 +113,9 @@ const scraperObject = {
             } catch (e) {
                 console.log(e);
                 console.timeEnd('scraped');
-                resolve({'err': e});
+                resolve({
+                    'err': e
+                });
             }
 
         }).catch(e => {
@@ -137,7 +138,10 @@ const scraperObject = {
                         .catch(err => {
                             console.log('pagePromise got error on:', i, err);
 
-                            em.emit('ERROR_SCRAPPING', {currentPagesScanned, category});
+                            em.emit('ERROR_SCRAPPING', {
+                                currentPagesScanned,
+                                category
+                            });
                             return currentPagesScanned;
                         });
 

@@ -100,8 +100,9 @@ function addMissingDataToDB(data) {
 async function saveArticle(data, missing) {
     console.time('starting to write');
 
-    if (missing) {
+    if (missing || !data.category) {
         console.log('missing: ', data);
+        console.log('missing data.category: ', data.category);
         addMissingDataToDB(data);
     }
 
@@ -126,7 +127,7 @@ async function saveArticle(data, missing) {
                 fs.mkdirSync(DIRNAME);
             } catch (e) {
                 console.error(e);
-                return
+                return;
             }
         }
     }
